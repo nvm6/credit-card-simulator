@@ -42,6 +42,7 @@ function App() {
 
   // This function will be called when the user clicks on the "Start Game" button
   const startGame = () => {
+    setCurrentQuestionIndex(0);
     setCurrentScreen('questionScreen');
   };
   
@@ -76,7 +77,8 @@ function App() {
         setShowResultModal(true);
       } else {
         // If there are no more questions, end the game
-        setCurrentScreen('home');
+        setShowResultModal(true);
+        setCurrentScreen('endGameScreen');
       }
     }
   };
@@ -158,16 +160,15 @@ function App() {
     </div>
   );
 
-  // This function will be called to open the end game screen when all questions are answered
   const openEndGameScreen = () => (
-    <div className="result-modal">
-      <div className="result-modal-content">
-        <h1>Game Over</h1>
-        <p>Congratulations! You have completed the game.</p>
-        <button className="button-class" onClick={() => setCurrentScreen('home')}>
-          Close
-        </button>
-      </div>
+    <div>
+      <div>
+      <h1>Game Over</h1>
+      <p>Congratulations! You have completed the game.</p>
+      <button className="button-class" onClick={() => setCurrentScreen('home')}>
+        Close
+      </button>
+    </div>
     </div>
   );
 
@@ -178,7 +179,7 @@ function App() {
         {currentScreen === 'home' && openHomeScreen()} {/* This will display the home screen when the currentScreen state is set to 'home' */}
         {currentScreen === 'questionScreen' && openQuestionScreen()} {/* This will display the question screen when the currentScreen state is set to 'questionScreen' */}
         {showResultModal && !isGameOver && openResultScreen()} {/* Display the result modal if it's not the end game */}
-        {isGameOver && openEndGameScreen()} {/* Display the end game screen if the game is over */}
+        { currentScreen === 'endGameScreen' && isGameOver && openEndGameScreen()} {/*Display the end game screen if the game is over*/}
       </header>
     </div>
   );
