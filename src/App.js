@@ -127,8 +127,7 @@ function App() {
         <button className="option-choice" id="optionA" onClick={() => handleOptionClick('optionA')}>
           {questions[currentQuestionIndex].options[0]}
         </button>
-        <br />
-        <br />
+        &nbsp;&nbsp;&nbsp;
         <button className="option-choice" id="optionB" onClick={() => handleOptionClick('optionB')}>
           {questions[currentQuestionIndex].options[1]}
         </button>
