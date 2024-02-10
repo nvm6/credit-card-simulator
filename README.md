@@ -29,7 +29,7 @@ The game is developed using React, JavaScript, HTML, and CSS.
 ### Installation
 1. Clone the repository to your local machine.
    ```bash
-   git clone https://github.com/your-username/CreditQuest.git
+   git clone https://github.com/nvm6/credit-card-simulator.git
 2. Navigate to the project directory.
     cd CreditQuest
 3. Install dependencies.
@@ -43,16 +43,16 @@ The game is developed using React, JavaScript, HTML, and CSS.
 
 ### Technologies Used
 
-React: Front-end library for building user interfaces.
-JavaScript: Programming language for dynamic behavior.
-HTML: Markup language for structuring the content.
-CSS: Styling language for layout and design.
+- React: Front-end library for building user interfaces.
+- JavaScript: Programming language for dynamic behavior.
+- HTML: Markup language for structuring the content.
+-CSS: Styling language for layout and design.
 
 ### Authors
-Naga Maddipudi
-Carol Aguilar Torres
-Ugochukwu Alozie
-Adrian Quiroz
+- Naga Maddipudi
+- Carol Aguilar Torres
+- Ugochukwu Alozie
+- Adrian Quiroz
 
 Have fun playing CreditQuest and enhancing your financial literacy! 
 If you have any questions or feedback, feel free to reach out.
