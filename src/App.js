@@ -60,6 +60,20 @@ function App() {
         "Correct! Understanding what APR is and how it applies to your outstanding balance is part of using a credit card responsibly. As the name implies, interest rates are shown as a yearly rate."
       ]
     },
+    {
+      question: "You applied for a credit card and were approved with a credit limit of $1,000! How can you practice staying within your credit limit?",
+      options: [
+        "Using all $1,000 is still within the limit..right?",
+        "Make it a habit to only spend up to $300 in credit card purchases each month.",
+        "Do your best to never reach $1,000 in purchases."
+      ],
+      correctAnswer: "optionB",
+      reasons: [
+        "Never reach your credit limit unless you have a financial emergency and no other means to make a purchase. However, you want to avoid this situation entirely.",
+        "Correct! Limiting yourself to only using 30% of your credit limit (if necessary!) is one of the best ways to build responsible credit card habits.",
+        "Never reaching the credit limit is a good start. If your spending habits fluctuate month to month, consider reviewing your budget and making changes."
+      ]
+    },
   ];
 
   // This function will be called when the user clicks on the "Start Game" button
@@ -102,21 +116,6 @@ function App() {
     setShowResultModal(true);
 
     setResultMessage(questions[currentQuestionIndex].reasons[optionToIndex[selectedAnswer]]);
-
-    if (isCorrect) {
-      // Move to the next question if the answer is correct
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-
-      // Check if there are more questions
-      if (currentQuestionIndex < questions.length - 1) {
-        // Reset result modal and move to the next question
-        setShowResultModal(true);
-      } else {
-        // If there are no more questions, end the game
-        setShowResultModal(true);
-        setCurrentScreen('endGameScreen');
-      }
-    }
   };
 
   // This function will be called when the user clicks on the "Close" button in the result modal
@@ -132,6 +131,11 @@ function App() {
       option.disabled = false;
     });
 
+    //check if the answer is correct and move to the next question
+    if (selectedOption === questions[currentQuestionIndex].correctAnswer && currentQuestionIndex < questions.length) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    }
+
 
     // Check if the game is over
     if (currentQuestionIndex === questions.length) {
@@ -144,12 +148,13 @@ function App() {
   const openHomeScreen = () => (
     <div>
       <h1>Credit Card Simulator</h1> {/* This will display the title of the game */}
-      <h2 className='description'>This simulator is meant to help young adults with credit card management.</h2> {/* This will display a brief description of the game */}
+      <h2 className='description'>Welcome to credit card simulator! Need help identifying good and back practices with credit cards? Come take a look 👀. Some resources that we used were from Discover's website. We even asked college students here at UIC of their experience! </h2> {/* This will display a brief description of the game */}
+      <h5>Developed with React, JavaScript, HTML, and CSS.</h5>
       <br />
       <br />
       <button className="button-class" onClick={startGame}>Start Game </button> {/* This will display a button to start the game */}
     </div>
-  );
+  ); 
 
   const openQuestionScreen = () => {
     const handleOptionClick = (selectedId) => {
