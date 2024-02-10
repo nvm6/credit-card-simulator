@@ -49,10 +49,10 @@ The game is developed using React, JavaScript, HTML, and CSS.
 -CSS: Styling language for layout and design.
 
 ### Authors
-- Naga Maddipudi
-- Carol Aguilar Torres
-- Ugochukwu Alozie
-- Adrian Quiroz
+- Naga Maddipudi (Lead Developer & Project Brainstorming)
+- Carol Aguilar Torres (Research Manager & Project Brainstorming)
+- Ugochukwu Alozie (Presentation Manager)
+- Adrian Quiroz (Tech Help & Project Brainstorming)
 
 Have fun playing CreditQuest and enhancing your financial literacy! 
 If you have any questions or feedback, feel free to reach out.
