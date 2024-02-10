@@ -6,37 +6,84 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState('home'); // This will be used to keep track of the current screen
   const [showResultModal, setShowResultModal] = useState(false); // This will be used to show/hide the result modal
   const [resultMessage, setResultMessage] = useState(''); // This will be used to display the result message
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // This will be used to keep track of the current question index
+
+  const questions = [
+    {
+      question: "You just got your first credit card and deposited $100. Congratulations! What is the first thing you do with this money?",
+      options: [
+        "a. Spend it on a new pair of shoes that cost $150 that you have been eyeing for a while.",
+        "b. Put all the money in your savings account and forget about it.",
+        "c. Use the money to pay off your credit card bill."
+      ],
+      correctAnswer: "optionC"
+    },
+    {
+      question: "You just received your credit card statement with a minimum payment due. What should you do?",
+      options: [
+        "a. Pay the full statement balance to avoid interest charges.",
+        "b. Ignore the statement; you'll deal with it later.",
+        "c. Pay the minimum amount due to avoid late fees."
+      ],
+      correctAnswer: "optionA"
+    },
+    {
+      question: "What factor is NOT considered when calculating your credit score?",
+      options: [
+        "a. Your payment history",
+        "b. Your income level",
+        "c. The length of your credit history"
+      ],
+      correctAnswer: "optionB"
+    },
+  ];
 
   // This function will be called when the user clicks on the "Start Game" button
   const startGame = () => {
     setCurrentScreen('questionScreen');
   };
-
-  // This function will be called when the user clicks on the "Submit" button
+  
+  // This function will be called when the user clicks on the "Start Game" button
   const showResult = () => {
     const selectedAnswer = document.querySelector('input[name="answer"]:checked'); // This will get the selected answer
-
+  
     // If no answer is selected, show an error message
     if (!selectedAnswer) {
       setShowResultModal(true);
       setResultMessage('Please select an answer.');
       return;
     }
-
+  
     // Check if the selected answer is correct
-    const isCorrect = selectedAnswer.id === 'optionC';
-
+    const isCorrect = selectedAnswer.id === questions[currentQuestionIndex].correctAnswer;
+  
     // Show the result modal
     setShowResultModal(true);
     setResultMessage(isCorrect ? 'Your answer is correct!' : 'Sorry, your answer is incorrect.');
-
-    // setCurrentScreen('home');
+  
+    if (isCorrect) {
+      // Move to the next question if the answer is correct
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+  
+      // Check if there are more questions
+      if (currentQuestionIndex < questions.length - 1) {
+        // Reset result modal and move to the next question
+        setShowResultModal(false);
+      } else {
+        // If there are no more questions, end the game
+        setCurrentScreen('home');
+      }
+    }
   };
 
   // This function will be called when the user clicks on the "Close" button in the result modal
   const closeResultModal = () => {
     setShowResultModal(false);
-    // setCurrentScreen('home');
+  
+    // Check if the game is over
+    if (currentQuestionIndex === questions.length) {
+      setCurrentScreen('home');
+    }
   };
 
   // This function will be called to open the home screen
@@ -50,32 +97,33 @@ function App() {
     </div>
   );
 
-  // This function will be called to open the question screen
-  const openQuestionScreen = () => (
-    <div>
-      <h1>Question: You just got your first credit card and deposited $100. Congratulations! What is the first thing you do with this money?</h1> {/* This will display the question */}
+// This function will be called to open the question screen
+const openQuestionScreen = () => (
+  <div>
+    <h1>{questions[currentQuestionIndex].question}</h1> {/* Display the current question */}
+    <br />
+    <form>
+      <label>
+        <input type="radio" name="answer" id="optionA" />
+        {questions[currentQuestionIndex].options[0]}
+      </label>
       <br />
-      <form>
-        <label>
-          <input type="radio" name="answer" id="optionA" /> {/* This will display the first option */}
-          a. Spend it on a new pair of shoes that cost $150 that you have been eyeing for a while.
-        </label>
-        <br />
-        <label>
-          <input type="radio" name="answer" id="optionB" /> {/* This will display the second option */}
-          b. Put all the money in your savings account and forget about it.
-        </label>
-        <br />
-        <label>
-          <input type="radio" name="answer" id="optionC" /> {/* This will display the third option */}
-          c. Use the money to pay off your credit card bill.
-        </label>
-      </form>
+      <label>
+        <input type="radio" name="answer" id="optionB" />
+        {questions[currentQuestionIndex].options[1]}
+      </label>
       <br />
-      <br />
-      <button className="button-class" onClick={showResult}>Submit</button> {/* This will display a button to submit the answer */}
-    </div>
-  );
+      <label>
+        <input type="radio" name="answer" id="optionC" />
+        {questions[currentQuestionIndex].options[2]}
+      </label>
+    </form>
+    <br />
+    <br />
+    <button className="button-class" onClick={showResult}>Submit</button> {/* This will display a button to submit the answer */}
+  </div>
+);
+
 
   // This function will be called to open the result modal
   const openResultScreen = () => (
