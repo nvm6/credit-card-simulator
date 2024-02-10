@@ -20,24 +20,18 @@ function App() {
     {
       question: "Your credit card has a rewards system! You can earn 2% cashback at gas stations and restaurants, and 1% cashback on all other purchases. As a new credit card owner, you are being offered a dollar-for-dollar cashback match at the end of your first year! You decide to…",
       options: [
-        "a. Max out your credit limit each month for the first year. Gotta max out those rewards!",
-        "b. Continue using your credit card on one small purchase each month. The cashback is a nice perk, but it wasn’t the main reason you got a credit card.",
-        "c. Go out to eat a little more often and use your credit card each time. A little more spending doesn’t hurt."
+        "Spend it on a new pair of shoes that cost $150 that you have been eyeing for a while.",
+        "Put all the money in your savings account and forget about it.",
+        "Use the money to pay off your credit card bill."
       ],
-      correctAnswer: "optionB",
-      reasons: [
-        "Maxing out your rewards sounds nice, but maxing your credit limit will negatively impact your credit history!",
-        "Think of the bonus cashback rewards as a “thank you” for being a credit card user. It’s important to keep using your credit card responsibly.",
-        "If you spend within your means and pay your bill in full on time, you should be okay. Be mindful of any potential bad habits!"
-      ]
-
+      correctAnswer: "optionC"
     },
     {
       question: "You need to start building your credit history, but you worry about not being responsible enough for a credit card. What’s another way you can build credit?",
       options: [
-        "a. Ask your parent/guardian to be an authorized user on their credit card. They’re pretty good about using them, too.",
-        "b. You don’t need to build your credit history because you’re a CS major. You’re going to make six figures and won’t ever need to borrow money!",
-        "c. Your friend offered to make you an authorized user on her credit card, so you bring it up with her again. Sometimes she’s late on her payments but is good with it otherwise."
+        "Pay the full statement balance to avoid interest charges.",
+        "Ignore the statement; you'll deal with it later.",
+        "Pay the minimum amount due to avoid late fees."
       ],
       correctAnswer: "optionA",
       reasons: [
@@ -49,16 +43,11 @@ function App() {
     {
       question: "Your credit card’s APR is 18%. What does that mean?",
       options: [
-        "a. You pay your credit card bill in full, so you don’t have to worry about that!",
-        "b. A credit card is free money. The fine print doesn’t matter.",
-        "c. APR stands for Annual Percentage Rate. The percentage is what credit card companies use to determine how much interest you may owe."
+        "Your payment history",
+        "Your income level",
+        "The length of your credit history"
       ],
-      correctAnswer: "optionC",
-      reasons: [
-        "Good job! However, you should take some time to learn what APR is and how it works. There might be a time when you can’t pay your full balance for whatever reason.",
-        "Credit cards are another type of loan, which is money you borrow. If you believe otherwise, you should reconsider if you’re responsible enough for a credit card.",
-        "Understanding what APR is and how it applies to your outstanding balance is part of using a credit card responsibly. As the name implies, interest rates are shown as a yearly rate."
-      ]
+      correctAnswer: "optionB"
     },
   ];
 
@@ -134,7 +123,7 @@ function App() {
   const openHomeScreen = () => (
     <div>
       <h1>Credit Card Simulator</h1> {/* This will display the title of the game */}
-      <h2>This simulator is meant to help young adults with credit card management.</h2> {/* This will display a brief description of the game */}
+      <h2 className='description'>This simulator is meant to help young adults with credit card management.</h2> {/* This will display a brief description of the game */}
       <br />
       <br />
       <button className="button-class" onClick={startGame}>Start Game </button> {/* This will display a button to start the game */}
@@ -157,21 +146,23 @@ function App() {
 
     return (
       <div>
+        <br />
+        <br />
         <button className="back-button" onClick={() => setCurrentScreen('home')}>🏠</button>
         <h2>{questions[currentQuestionIndex].question}</h2>
         <br />
         <button className="option-choice" id="optionA" onClick={() => handleOptionClick('optionA')}>
-          {questions[currentQuestionIndex].options[0]}
+          {"A. " + questions[currentQuestionIndex].options[0]}
         </button>
         <br />
         <br />
         <button className="option-choice" id="optionB" onClick={() => handleOptionClick('optionB')}>
-          {questions[currentQuestionIndex].options[1]}
+          {"B. " + questions[currentQuestionIndex].options[1]}
         </button>
         <br />
         <br />
         <button className="option-choice" id="optionC" onClick={() => handleOptionClick('optionC')}>
-          {questions[currentQuestionIndex].options[2]}
+          {"C. " + questions[currentQuestionIndex].options[2]}
         </button>
         <br />
         <br />
@@ -185,11 +176,14 @@ function App() {
   const openResultScreen = () => (
     <div className="result-modal">
       <div className="result-modal-content">
-        <h1>Explanation</h1>
+        <h1 className='description'>Explanation</h1>
         <p>{resultMessage}</p>
         <button className="button-class" onClick={closeResultModal}> {/* This will display a button to close the result modal */}
           Close
         </button>
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   );
@@ -209,7 +203,7 @@ function App() {
   // This will be the main component that will be rendered by the App component
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header" style={{backgroundColor: "#03071E"}}>
         {currentScreen === 'home' && openHomeScreen()} {/* This will display the home screen when the currentScreen state is set to 'home' */}
         {currentScreen === 'questionScreen' && openQuestionScreen()} {/* This will display the question screen when the currentScreen state is set to 'questionScreen' */}
         {showResultModal && !isGameOver && openResultScreen()} {/* Display the result modal if it's not the end game */}
