@@ -9,13 +9,14 @@ function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Kep track of the current question index
   const [selectedOption, setSelectedOption] = useState(''); // Keep track of the selected option
 
+  // A map to convert the option id to an index
   const optionToIndex = {
     "optionA": 0,
     "optionB": 1,
     "optionC": 2
   };
 
-  // A list of questions for the game with options and correct answers
+  // A list of questions for the game with options, correct answers and reasons
   const questions = [
     {
       question: "Your credit card has a rewards system! You can earn 2% cashback at gas stations and restaurants, and 1% cashback on all other purchases. As a new credit card owner, you are being offered a dollar-for-dollar cashback match at the end of your first year! You decide to…",
@@ -78,10 +79,13 @@ function App() {
 
   // This function will be called when the user clicks on the "Start Game" button
   const startGame = () => {
-    setCurrentQuestionIndex(0);
-    setCurrentScreen('questionScreen');
-    document.querySelector('.button-class').style.visibility = 'visible';
+    setCurrentQuestionIndex(0); // Set the current question index to 0
 
+    setCurrentScreen('questionScreen'); // Change the current screen to 'questionScreen'
+
+    document.querySelector('.button-class').style.visibility = 'visible'; // Make the submit button visible
+
+    // Enable the option buttons and reset the background color
     const options = document.querySelectorAll('.option-choice');
     options.forEach((option) => {
       option.disabled = false;
@@ -92,7 +96,7 @@ function App() {
   
   // This function will be called when the user clicks on the "Start Game" button
   const showResult = () => {
-    const selectedAnswer = selectedOption;
+    const selectedAnswer = selectedOption; // Get the selected answer
 
     // If no answer is selected, show an error message
     if (!selectedAnswer) {
@@ -106,7 +110,8 @@ function App() {
 
     // Make the submit button invisible
     document.querySelector('.button-class').style.visibility = 'hidden';
-    //disable the options
+
+    // Disable the option buttons to prevent the user from changing their answer
     const options = document.querySelectorAll('.option-choice');
     options.forEach((option) => {
       option.disabled = true;
@@ -115,26 +120,29 @@ function App() {
     // Show the result modal
     setShowResultModal(true);
 
+    // Set the result message based on the selected answer
     setResultMessage(questions[currentQuestionIndex].reasons[optionToIndex[selectedAnswer]]);
   };
 
   // This function will be called when the user clicks on the "Close" button in the result modal
   const closeResultModal = () => {
-    setShowResultModal(false);
 
+    setShowResultModal(false); // Hide the result modal
+ 
     // Make the submit button visible
     document.querySelector('.button-class').style.visibility = 'visible';
 
-    //enable the options
+    // Enable the option buttons
     const options = document.querySelectorAll('.option-choice');
     options.forEach((option) => {
       option.disabled = false;
     });
 
-    //check if the answer is correct and move to the next question
+    // Check if the answer is correct and move to the next question
     if (selectedOption === questions[currentQuestionIndex].correctAnswer && currentQuestionIndex < questions.length-1) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1); // Move to the next question
 
+      // Reset the background color of the option buttons
       const options = document.querySelectorAll('.option-choice');
       options.forEach((option) => {
         option.style.backgroundColor = 'white';
@@ -143,15 +151,16 @@ function App() {
 
 
     // Check if the game is over
-    if (currentQuestionIndex === questions.length-1) {
-      setIsGameOver(true);
-      setCurrentScreen('endGameScreen');
+    if (currentQuestionIndex === questions.length-1) { // If the current question index is equal to the length of the questions array
+      setIsGameOver(true); // Set the boolean state to true
+      setCurrentScreen('endGameScreen'); // Change the current screen to 'endGameScreen'
     }
   };
 
   // This function will be called to open the home screen
   const openHomeScreen = () => (
     <div>
+
       <h1 className='title' >CreditQuest</h1> {/* This will display the title of the game */}
       <h2 className='description'>Welcome to credit card simulator! Need help identifying good and bad practices with credit cards? Come take a look 👀. Some resources that we used were from Discover's website. We even asked college students here at UIC of their experience! </h2> {/* This will display a brief description of the game */}
       <h5>Developed with React, JavaScript, HTML, and CSS.</h5>
@@ -161,9 +170,12 @@ function App() {
     </div>
   ); 
 
+  // This function will be called to open the question screen
   const openQuestionScreen = () => {
-    const handleOptionClick = (selectedId) => {
-      const options = document.querySelectorAll('.option-choice');
+    const handleOptionClick = (selectedId) => { // This function will be called when the user clicks on an option
+      const options = document.querySelectorAll('.option-choice'); // Get all the option buttons
+
+      // Change the background color of the selected option to green and reset the background color of the other options
       options.forEach((option) => {
         if (option.id === selectedId) {
           option.style.backgroundColor = 'green';
@@ -171,17 +183,19 @@ function App() {
           option.style.backgroundColor = 'white';
         }
       });
-
-      setSelectedOption(selectedId);
+ 
+      setSelectedOption(selectedId); // Set the selected option to the id of the selected option
     };
 
+    // This is the html for the question screen that will be displayed
     return (
       <div>
         <br />
         <br />
-        <button className="back-button" onClick={() => setCurrentScreen('home')}>🏠</button>
+        <button className="back-button" onClick={() => setCurrentScreen('home')}>🏠</button> {/* This button is used to go back to the home screen */}
         <h2>{questions[currentQuestionIndex].question}</h2>
         <br />
+        {/* This will display the options for the current question */}
         <button className="option-choice" id="optionA" onClick={() => handleOptionClick('optionA')}>
           {"A. " + questions[currentQuestionIndex].options[0]}
         </button>
@@ -197,6 +211,7 @@ function App() {
         </button>
         <br />
         <br />
+        {/* This will display the submit button */}
         <button className="button-class" onClick={showResult}>Submit</button>
       </div>
     );
@@ -212,21 +227,16 @@ function App() {
         <button className="button-class" onClick={closeResultModal}> {/* This will display a button to close the result modal */}
           Close
         </button>
-        <br />
-        <br />
-        <br />
       </div>
     </div>
   );
 
+  // This function will be called to open the end game screen
   const openEndGameScreen = () => (
     <div>
       <div>
       <h1>Game Over</h1>
       <p>Congratulations! You have completed the game.</p>
-      {/* <button className="button-class" onClick={() => setCurrentScreen('home')}>
-        Close
-      </button> */}
     </div>
     </div>
   );
