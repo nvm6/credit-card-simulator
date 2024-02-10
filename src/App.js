@@ -106,7 +106,9 @@ function App() {
 // This function will be called to open the question screen
 const openQuestionScreen = () => (
   <div>
-    <h1>{questions[currentQuestionIndex].question}</h1> {/* Display the current question */}
+    <button className="back-button" onClick={() => setCurrentScreen('home')}>🏠</button> {/* Button to go back to home screen*/}
+
+    <h1>{questions[currentQuestionIndex].question}</h1>
     <br />
     <form>
       <label>
@@ -126,7 +128,7 @@ const openQuestionScreen = () => (
     </form>
     <br />
     <br />
-    <button className="button-class" onClick={showResult}>Submit</button> {/* This will display a button to submit the answer */}
+    <button className="button-class" onClick={showResult}>Submit</button>
   </div>
 );
 
@@ -135,7 +137,7 @@ const openQuestionScreen = () => (
   const openResultScreen = () => (
     <div className="result-modal">
       <div className="result-modal-content">
-        <h1>Result Screen</h1>
+        <h1>Explanation</h1>
         <p>{resultMessage}</p>
         <button className="button-class" onClick={closeResultModal}> {/* This will display a button to close the result modal */}
           Close
