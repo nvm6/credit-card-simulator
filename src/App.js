@@ -56,7 +56,10 @@ function App() {
   
     // Check if the selected answer is correct
     const isCorrect = selectedAnswer.id === questions[currentQuestionIndex].correctAnswer;
-  
+
+    //make the submit button invisible
+    document.querySelector('.button-class').style.visibility = 'hidden';
+
     // Show the result modal
     setShowResultModal(true);
     setResultMessage(isCorrect ? 'Your answer is correct!' : 'Sorry, your answer is incorrect.');
@@ -68,7 +71,7 @@ function App() {
       // Check if there are more questions
       if (currentQuestionIndex < questions.length - 1) {
         // Reset result modal and move to the next question
-        setShowResultModal(false);
+        setShowResultModal(true);
       } else {
         // If there are no more questions, end the game
         setCurrentScreen('home');
@@ -79,6 +82,9 @@ function App() {
   // This function will be called when the user clicks on the "Close" button in the result modal
   const closeResultModal = () => {
     setShowResultModal(false);
+
+    //make the submit button visible
+    document.querySelector('.button-class').style.visibility = 'visible';
   
     // Check if the game is over
     if (currentQuestionIndex === questions.length) {
