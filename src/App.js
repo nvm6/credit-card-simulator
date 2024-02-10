@@ -26,9 +26,9 @@ function App() {
       ],
       correctAnswer: "optionB",
       reasons: [
-        "Maxing out your rewards sounds nice, but maxing your credit limit will negatively impact your credit history!",
+        "No!! Maxing out your rewards sounds nice, but maxing your credit limit will negatively impact your credit history!",
         "Correct! Think of the bonus cashback rewards as a “thank you” for being a credit card user. It’s important to keep using your credit card responsibly.",
-        "If you spend within your means and pay your bill in full on time, you should be okay. Be mindful of any potential bad habits!"
+        "Okay... If you spend within your means and pay your bill in full on time, you should be okay. Be mindful of any potential bad habits!"
       ]
 
     },
@@ -42,8 +42,8 @@ function App() {
       correctAnswer: "optionA",
       reasons: [
         "Correct! Being an authorized user means you don’t necessarily need to use a credit card yourself. A responsible parent/guardian can also teach you about best practices for when you get a credit card in the future.",
-        "Even if you’re rich, you shouldn’t ignore building your credit history. Without a credit score, how else can you get a loan for your future startup?",
-        "You can be an authorized user on your friend’s credit card if you meet other eligibility requirements, but be cautious. Their spending habits can negatively impact your credit now, too."
+        "No!! Even if you’re rich, you shouldn’t ignore building your credit history. Without a credit score, how else can you get a loan for your future startup?",
+        "Okay... You can be an authorized user on your friend’s credit card if you meet other eligibility requirements, but be cautious. Their spending habits can negatively impact your credit now, too."
       ]
     },
     {
@@ -55,8 +55,8 @@ function App() {
       ],
       correctAnswer: "optionC",
       reasons: [
-        "Good job! However, you should take some time to learn what APR is and how it works. There might be a time when you can’t pay your full balance for whatever reason.",
-        "Credit cards are another type of loan, which is money you borrow. If you believe otherwise, you should reconsider if you’re responsible enough for a credit card.",
+        "Okay... However, you should take some time to learn what APR is and how it works. There might be a time when you can’t pay your full balance for whatever reason.",
+        "No!! Credit cards are another type of loan, which is money you borrow. If you believe otherwise, you should reconsider if you’re responsible enough for a credit card.",
         "Correct! Understanding what APR is and how it applies to your outstanding balance is part of using a credit card responsibly. As the name implies, interest rates are shown as a yearly rate."
       ]
     },
@@ -69,9 +69,9 @@ function App() {
       ],
       correctAnswer: "optionB",
       reasons: [
-        "Never reach your credit limit unless you have a financial emergency and no other means to make a purchase. However, you want to avoid this situation entirely.",
+        "No!! Never reach your credit limit unless you have a financial emergency and no other means to make a purchase. However, you want to avoid this situation entirely.",
         "Correct! Limiting yourself to only using 30% of your credit limit (if necessary!) is one of the best ways to build responsible credit card habits.",
-        "Never reaching the credit limit is a good start. If your spending habits fluctuate month to month, consider reviewing your budget and making changes."
+        "Okay... Never reaching the credit limit is a good start. If your spending habits fluctuate month to month, consider reviewing your budget and making changes."
       ]
     },
   ];
@@ -132,13 +132,18 @@ function App() {
     });
 
     //check if the answer is correct and move to the next question
-    if (selectedOption === questions[currentQuestionIndex].correctAnswer && currentQuestionIndex < questions.length) {
+    if (selectedOption === questions[currentQuestionIndex].correctAnswer && currentQuestionIndex < questions.length-1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+
+      const options = document.querySelectorAll('.option-choice');
+      options.forEach((option) => {
+        option.style.backgroundColor = 'white';
+      });
     }
 
 
     // Check if the game is over
-    if (currentQuestionIndex === questions.length) {
+    if (currentQuestionIndex === questions.length-1) {
       setIsGameOver(true);
       setCurrentScreen('endGameScreen');
     }

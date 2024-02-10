@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  padding: 25px;
+  background-color: #03071E;
 }
 
 .App-logo {
@@ -54,14 +56,11 @@
   font-size: 30px;
   border-radius: 10px;
   border: 2px solid black;
-  /* border: 2px solid #CED4DA; */
-
+  padding: 10px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  } */
+
 }
 
 .App-header {
@@ -77,13 +76,4 @@
 
 .App-link {
   color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
