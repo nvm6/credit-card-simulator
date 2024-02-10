@@ -2,12 +2,14 @@ import './App.css';
 import React, { useState } from 'react';
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState('home'); // This will be used to keep track of the current screen
-  const [showResultModal, setShowResultModal] = useState(false); // This will be used to show/hide the result modal
-  const [resultMessage, setResultMessage] = useState(''); // This will be used to display the result message
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // This will be used to keep track of the current question index
-  const [selectedOption, setSelectedOption] = useState(''); // This will be used to keep track of the selected option
+  const [currentScreen, setCurrentScreen] = useState('home'); // Keeps track of the current screen
+  const [showResultModal, setShowResultModal] = useState(false); // Show/hide the result modal
+  const [isGameOver, setIsGameOver] = useState(false); // Check if the game is over
+  const [resultMessage, setResultMessage] = useState(''); // Display the result message
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Kep track of the current question index
+  const [selectedOption, setSelectedOption] = useState(''); // Keep track of the selected option
 
+  // A list of questions for the game with options and correct answers
   const questions = [
     {
       question: "You just got your first credit card and deposited $100. Congratulations! What is the first thing you do with this money?",
@@ -47,8 +49,6 @@ function App() {
   const showResult = () => {
     const selectedAnswer = selectedOption;
 
-    console.log(selectedAnswer);
-
     // If no answer is selected, show an error message
     if (!selectedAnswer) {
       setShowResultModal(true);
@@ -59,7 +59,7 @@ function App() {
     // Check if the selected answer is correct
     const isCorrect = selectedAnswer === questions[currentQuestionIndex].correctAnswer;
 
-    // make the submit button invisible
+    // Make the submit button invisible
     document.querySelector('.button-class').style.visibility = 'hidden';
 
     // Show the result modal
@@ -85,12 +85,12 @@ function App() {
   const closeResultModal = () => {
     setShowResultModal(false);
 
-    //make the submit button visible
+    // Make the submit button visible
     document.querySelector('.button-class').style.visibility = 'visible';
-  
+
     // Check if the game is over
     if (currentQuestionIndex === questions.length) {
-      setCurrentScreen('home');
+      setIsGameOver(true);
     }
   };
 
@@ -158,13 +158,27 @@ function App() {
     </div>
   );
 
+  // This function will be called to open the end game screen when all questions are answered
+  const openEndGameScreen = () => (
+    <div className="result-modal">
+      <div className="result-modal-content">
+        <h1>Game Over</h1>
+        <p>Congratulations! You have completed the game.</p>
+        <button className="button-class" onClick={() => setCurrentScreen('home')}>
+          Close
+        </button>
+      </div>
+    </div>
+  );
+
   // This will be the main component that will be rendered by the App component
   return (
     <div className="App">
       <header className="App-header">
         {currentScreen === 'home' && openHomeScreen()} {/* This will display the home screen when the currentScreen state is set to 'home' */}
         {currentScreen === 'questionScreen' && openQuestionScreen()} {/* This will display the question screen when the currentScreen state is set to 'questionScreen' */}
-        {showResultModal && openResultScreen()} {/* This will display the result modal when the showResultModal state is set to true */}
+        {showResultModal && !isGameOver && openResultScreen()} {/* Display the result modal if it's not the end game */}
+        {isGameOver && openEndGameScreen()} {/* Display the end game screen if the game is over */}
       </header>
     </div>
   );
