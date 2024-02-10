@@ -31,10 +31,13 @@ The game is developed using React, JavaScript, HTML, and CSS.
    ```bash
    git clone https://github.com/nvm6/credit-card-simulator.git
 2. Navigate to the project directory.
+   ```bash
     cd CreditQuest
 3. Install dependencies.
+   ```bash
     npm install
 4. Start the application.
+   ```bash
     npm start
 5. Open your browser and go to http://localhost:3000 to play CreditQuest.
 
