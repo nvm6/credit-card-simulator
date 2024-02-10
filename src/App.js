@@ -153,7 +153,7 @@ function App() {
   const openHomeScreen = () => (
     <div>
       <h1 className='title' >CreditQuest</h1> {/* This will display the title of the game */}
-      <h2 className='description'>Welcome to credit card simulator! Need help identifying good and back practices with credit cards? Come take a look 👀. Some resources that we used were from Discover's website. We even asked college students here at UIC of their experience! </h2> {/* This will display a brief description of the game */}
+      <h2 className='description'>Welcome to credit card simulator! Need help identifying good and bad practices with credit cards? Come take a look 👀. Some resources that we used were from Discover's website. We even asked college students here at UIC of their experience! </h2> {/* This will display a brief description of the game */}
       <h5>Developed with React, JavaScript, HTML, and CSS.</h5>
       <br />
       <br />
