@@ -20,11 +20,17 @@ function App() {
     {
       question: "Your credit card has a rewards system! You can earn 2% cashback at gas stations and restaurants, and 1% cashback on all other purchases. As a new credit card owner, you are being offered a dollar-for-dollar cashback match at the end of your first year! You decide to…",
       options: [
-        "Spend it on a new pair of shoes that cost $150 that you have been eyeing for a while.",
-        "Put all the money in your savings account and forget about it.",
-        "Use the money to pay off your credit card bill."
+        "Max out your credit limit each month for the first year. Gotta max out those rewards!",
+        "Continue using your credit card on one small purchase each month. The cashback is a nice perk, but it wasn’t the main reason you got a credit card.",
+        "Go out to eat a little more often and use your credit card each time. A little more spending doesn’t hurt."
       ],
-      correctAnswer: "optionC"
+      correctAnswer: "optionB",
+      reasons: [
+        "Maxing out your rewards sounds nice, but maxing your credit limit will negatively impact your credit history!",
+        "Correct! Think of the bonus cashback rewards as a “thank you” for being a credit card user. It’s important to keep using your credit card responsibly.",
+        "If you spend within your means and pay your bill in full on time, you should be okay. Be mindful of any potential bad habits!"
+      ]
+
     },
     {
       question: "You need to start building your credit history, but you worry about not being responsible enough for a credit card. What’s another way you can build credit?",
@@ -35,7 +41,7 @@ function App() {
       ],
       correctAnswer: "optionA",
       reasons: [
-        "Being an authorized user means you don’t necessarily need to use a credit card yourself. A responsible parent/guardian can also teach you about best practices for when you get a credit card in the future.",
+        "Correct! Being an authorized user means you don’t necessarily need to use a credit card yourself. A responsible parent/guardian can also teach you about best practices for when you get a credit card in the future.",
         "Even if you’re rich, you shouldn’t ignore building your credit history. Without a credit score, how else can you get a loan for your future startup?",
         "You can be an authorized user on your friend’s credit card if you meet other eligibility requirements, but be cautious. Their spending habits can negatively impact your credit now, too."
       ]
@@ -43,11 +49,16 @@ function App() {
     {
       question: "Your credit card’s APR is 18%. What does that mean?",
       options: [
-        "Your payment history",
-        "Your income level",
-        "The length of your credit history"
+        "You pay your credit card bill in full, so you don’t have to worry about that!",
+        "A credit card is free money. The fine print doesn’t matter.",
+        "APR stands for Annual Percentage Rate. The percentage is what credit card companies use to determine how much interest you may owe."
       ],
-      correctAnswer: "optionB"
+      correctAnswer: "optionC",
+      reasons: [
+        "Good job! However, you should take some time to learn what APR is and how it works. There might be a time when you can’t pay your full balance for whatever reason.",
+        "Credit cards are another type of loan, which is money you borrow. If you believe otherwise, you should reconsider if you’re responsible enough for a credit card.",
+        "Correct! Understanding what APR is and how it applies to your outstanding balance is part of using a credit card responsibly. As the name implies, interest rates are shown as a yearly rate."
+      ]
     },
   ];
 
@@ -56,6 +67,13 @@ function App() {
     setCurrentQuestionIndex(0);
     setCurrentScreen('questionScreen');
     document.querySelector('.button-class').style.visibility = 'visible';
+
+    const options = document.querySelectorAll('.option-choice');
+    options.forEach((option) => {
+      option.disabled = false;
+      option.style.backgroundColor = 'white';
+    });
+
   };
   
   // This function will be called when the user clicks on the "Start Game" button
@@ -74,18 +92,14 @@ function App() {
 
     // Make the submit button invisible
     document.querySelector('.button-class').style.visibility = 'hidden';
+    //disable the options
+    const options = document.querySelectorAll('.option-choice');
+    options.forEach((option) => {
+      option.disabled = true;
+    });
 
     // Show the result modal
     setShowResultModal(true);
-
-    let index = 0;
-    if(selectedAnswer === "optionA"){
-      index = 0;
-    } else if(selectedAnswer === "optionB"){
-      index = 1;
-    } else if(selectedAnswer === "optionC"){
-      index = 2;
-    }
 
     setResultMessage(questions[currentQuestionIndex].reasons[optionToIndex[selectedAnswer]]);
 
@@ -111,6 +125,13 @@ function App() {
 
     // Make the submit button visible
     document.querySelector('.button-class').style.visibility = 'visible';
+
+    //enable the options
+    const options = document.querySelectorAll('.option-choice');
+    options.forEach((option) => {
+      option.disabled = false;
+    });
+
 
     // Check if the game is over
     if (currentQuestionIndex === questions.length) {
@@ -193,9 +214,9 @@ function App() {
       <div>
       <h1>Game Over</h1>
       <p>Congratulations! You have completed the game.</p>
-      <button className="button-class" onClick={() => setCurrentScreen('home')}>
+      {/* <button className="button-class" onClick={() => setCurrentScreen('home')}>
         Close
-      </button>
+      </button> */}
     </div>
     </div>
   );
