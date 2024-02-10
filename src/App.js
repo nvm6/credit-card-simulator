@@ -5,38 +5,60 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState('home'); // Keeps track of the current screen
   const [showResultModal, setShowResultModal] = useState(false); // Show/hide the result modal
   const [isGameOver, setIsGameOver] = useState(false); // Check if the game is over
-  const [resultMessage, setResultMessage] = useState(''); // Display the result message
+  const [resultMessage, setResultMessage] = useState(""); // Display the result message
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Kep track of the current question index
   const [selectedOption, setSelectedOption] = useState(''); // Keep track of the selected option
+
+  const optionToIndex = {
+    "optionA": 0,
+    "optionB": 1,
+    "optionC": 2
+  };
 
   // A list of questions for the game with options and correct answers
   const questions = [
     {
-      question: "You just got your first credit card and deposited $100. Congratulations! What is the first thing you do with this money?",
+      question: "Your credit card has a rewards system! You can earn 2% cashback at gas stations and restaurants, and 1% cashback on all other purchases. As a new credit card owner, you are being offered a dollar-for-dollar cashback match at the end of your first year! You decide to…",
       options: [
-        "a. Spend it on a new pair of shoes that cost $150 that you have been eyeing for a while.",
-        "b. Put all the money in your savings account and forget about it.",
-        "c. Use the money to pay off your credit card bill."
+        "a. Max out your credit limit each month for the first year. Gotta max out those rewards!",
+        "b. Continue using your credit card on one small purchase each month. The cashback is a nice perk, but it wasn’t the main reason you got a credit card.",
+        "c. Go out to eat a little more often and use your credit card each time. A little more spending doesn’t hurt."
       ],
-      correctAnswer: "optionC"
+      correctAnswer: "optionB",
+      reasons: [
+        "Maxing out your rewards sounds nice, but maxing your credit limit will negatively impact your credit history!",
+        "Think of the bonus cashback rewards as a “thank you” for being a credit card user. It’s important to keep using your credit card responsibly.",
+        "If you spend within your means and pay your bill in full on time, you should be okay. Be mindful of any potential bad habits!"
+      ]
+
     },
     {
-      question: "You just received your credit card statement with a minimum payment due. What should you do?",
+      question: "You need to start building your credit history, but you worry about not being responsible enough for a credit card. What’s another way you can build credit?",
       options: [
-        "a. Pay the full statement balance to avoid interest charges.",
-        "b. Ignore the statement; you'll deal with it later.",
-        "c. Pay the minimum amount due to avoid late fees."
+        "a. Ask your parent/guardian to be an authorized user on their credit card. They’re pretty good about using them, too.",
+        "b. You don’t need to build your credit history because you’re a CS major. You’re going to make six figures and won’t ever need to borrow money!",
+        "c. Your friend offered to make you an authorized user on her credit card, so you bring it up with her again. Sometimes she’s late on her payments but is good with it otherwise."
       ],
-      correctAnswer: "optionA"
+      correctAnswer: "optionA",
+      reasons: [
+        "Being an authorized user means you don’t necessarily need to use a credit card yourself. A responsible parent/guardian can also teach you about best practices for when you get a credit card in the future.",
+        "Even if you’re rich, you shouldn’t ignore building your credit history. Without a credit score, how else can you get a loan for your future startup?",
+        "You can be an authorized user on your friend’s credit card if you meet other eligibility requirements, but be cautious. Their spending habits can negatively impact your credit now, too."
+      ]
     },
     {
-      question: "What factor is NOT considered when calculating your credit score?",
+      question: "Your credit card’s APR is 18%. What does that mean?",
       options: [
-        "a. Your payment history",
-        "b. Your income level",
-        "c. The length of your credit history"
+        "a. You pay your credit card bill in full, so you don’t have to worry about that!",
+        "b. A credit card is free money. The fine print doesn’t matter.",
+        "c. APR stands for Annual Percentage Rate. The percentage is what credit card companies use to determine how much interest you may owe."
       ],
-      correctAnswer: "optionB"
+      correctAnswer: "optionC",
+      reasons: [
+        "Good job! However, you should take some time to learn what APR is and how it works. There might be a time when you can’t pay your full balance for whatever reason.",
+        "Credit cards are another type of loan, which is money you borrow. If you believe otherwise, you should reconsider if you’re responsible enough for a credit card.",
+        "Understanding what APR is and how it applies to your outstanding balance is part of using a credit card responsibly. As the name implies, interest rates are shown as a yearly rate."
+      ]
     },
   ];
 
@@ -44,6 +66,7 @@ function App() {
   const startGame = () => {
     setCurrentQuestionIndex(0);
     setCurrentScreen('questionScreen');
+    document.querySelector('.button-class').style.visibility = 'visible';
   };
   
   // This function will be called when the user clicks on the "Start Game" button
@@ -53,7 +76,7 @@ function App() {
     // If no answer is selected, show an error message
     if (!selectedAnswer) {
       setShowResultModal(true);
-      setResultMessage('Please select an answer.');
+      setResultMessage("Please select an answer.");
       return;
     }
 
@@ -65,7 +88,17 @@ function App() {
 
     // Show the result modal
     setShowResultModal(true);
-    setResultMessage(isCorrect ? 'Your answer is correct!' : 'Sorry, your answer is incorrect.');
+
+    let index = 0;
+    if(selectedAnswer === "optionA"){
+      index = 0;
+    } else if(selectedAnswer === "optionB"){
+      index = 1;
+    } else if(selectedAnswer === "optionC"){
+      index = 2;
+    }
+
+    setResultMessage(questions[currentQuestionIndex].reasons[optionToIndex[selectedAnswer]]);
 
     if (isCorrect) {
       // Move to the next question if the answer is correct
@@ -93,6 +126,7 @@ function App() {
     // Check if the game is over
     if (currentQuestionIndex === questions.length) {
       setIsGameOver(true);
+      setCurrentScreen('endGameScreen');
     }
   };
 
@@ -124,7 +158,7 @@ function App() {
     return (
       <div>
         <button className="back-button" onClick={() => setCurrentScreen('home')}>🏠</button>
-        <h1>{questions[currentQuestionIndex].question}</h1>
+        <h2>{questions[currentQuestionIndex].question}</h2>
         <br />
         <button className="option-choice" id="optionA" onClick={() => handleOptionClick('optionA')}>
           {questions[currentQuestionIndex].options[0]}
