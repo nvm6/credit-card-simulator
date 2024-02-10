@@ -1,12 +1,12 @@
 import './App.css';
 import React, { useState } from 'react';
 
-
 function App() {
   const [currentScreen, setCurrentScreen] = useState('home'); // This will be used to keep track of the current screen
   const [showResultModal, setShowResultModal] = useState(false); // This will be used to show/hide the result modal
   const [resultMessage, setResultMessage] = useState(''); // This will be used to display the result message
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // This will be used to keep track of the current question index
+  const [selectedOption, setSelectedOption] = useState(''); // This will be used to keep track of the selected option
 
   const questions = [
     {
@@ -45,29 +45,31 @@ function App() {
   
   // This function will be called when the user clicks on the "Start Game" button
   const showResult = () => {
-    const selectedAnswer = document.querySelector('input[name="answer"]:checked'); // This will get the selected answer
-  
+    const selectedAnswer = selectedOption;
+
+    console.log(selectedAnswer);
+
     // If no answer is selected, show an error message
     if (!selectedAnswer) {
       setShowResultModal(true);
       setResultMessage('Please select an answer.');
       return;
     }
-  
-    // Check if the selected answer is correct
-    const isCorrect = selectedAnswer.id === questions[currentQuestionIndex].correctAnswer;
 
-    //make the submit button invisible
+    // Check if the selected answer is correct
+    const isCorrect = selectedAnswer === questions[currentQuestionIndex].correctAnswer;
+
+    // make the submit button invisible
     document.querySelector('.button-class').style.visibility = 'hidden';
 
     // Show the result modal
     setShowResultModal(true);
     setResultMessage(isCorrect ? 'Your answer is correct!' : 'Sorry, your answer is incorrect.');
-  
+
     if (isCorrect) {
       // Move to the next question if the answer is correct
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-  
+
       // Check if there are more questions
       if (currentQuestionIndex < questions.length - 1) {
         // Reset result modal and move to the next question
@@ -103,34 +105,45 @@ function App() {
     </div>
   );
 
-// This function will be called to open the question screen
-const openQuestionScreen = () => (
-  <div>
-    <button className="back-button" onClick={() => setCurrentScreen('home')}>🏠</button> {/* Button to go back to home screen*/}
+  const openQuestionScreen = () => {
+    const handleOptionClick = (selectedId) => {
+      const options = document.querySelectorAll('.option-choice');
+      options.forEach((option) => {
+        if (option.id === selectedId) {
+          option.style.backgroundColor = 'green';
+        } else {
+          option.style.backgroundColor = 'white';
+        }
+      });
 
-    <h1>{questions[currentQuestionIndex].question}</h1>
-    <br />
-    <form>
-      <label>
-        <input type="radio" name="answer" id="optionA" />
-        {questions[currentQuestionIndex].options[0]}
-      </label>
-      <br />
-      <label>
-        <input type="radio" name="answer" id="optionB" />
-        {questions[currentQuestionIndex].options[1]}
-      </label>
-      <br />
-      <label>
-        <input type="radio" name="answer" id="optionC" />
-        {questions[currentQuestionIndex].options[2]}
-      </label>
-    </form>
-    <br />
-    <br />
-    <button className="button-class" onClick={showResult}>Submit</button>
-  </div>
-);
+      setSelectedOption(selectedId);
+    };
+
+    return (
+      <div>
+        <button className="back-button" onClick={() => setCurrentScreen('home')}>🏠</button>
+        <h1>{questions[currentQuestionIndex].question}</h1>
+        <br />
+        <button className="option-choice" id="optionA" onClick={() => handleOptionClick('optionA')}>
+          {questions[currentQuestionIndex].options[0]}
+        </button>
+        <br />
+        <br />
+        <button className="option-choice" id="optionB" onClick={() => handleOptionClick('optionB')}>
+          {questions[currentQuestionIndex].options[1]}
+        </button>
+        <br />
+        <br />
+        <button className="option-choice" id="optionC" onClick={() => handleOptionClick('optionC')}>
+          {questions[currentQuestionIndex].options[2]}
+        </button>
+        <br />
+        <br />
+        <button className="button-class" onClick={showResult}>Submit</button>
+      </div>
+    );
+  };
+
 
 
   // This function will be called to open the result modal
