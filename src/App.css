@@ -42,6 +42,12 @@
   border-radius: 10px;
   border: 2px solid black;
   padding: 10px;
+  /* font-family: 'Space Mono'; */
+}
+
+@font-face{
+  font-family: 'Space Mono', monospace;
+  src: url(SpaceMono-Regular.ttf);
 }
 
 .home-title {
@@ -50,6 +56,7 @@
 
 .description {
   padding: 20px;
+  font-size: 30px;
 }
 
 .option-choice{
