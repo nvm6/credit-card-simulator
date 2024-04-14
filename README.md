@@ -26,6 +26,19 @@ The game is developed using React, JavaScript, HTML, and CSS.
 - Instant feedback on your choices
 - Learn credit card best practices
 
+### Visuals
+
+#### Home Screen
+![alt text](images/homeScreen.png)
+
+Caption: Screenshot of the Home Screen when starting CreditQuest.
+
+
+#### Game Screen
+![alt text](images/gameScreen.png)
+
+Caption: Screenshot of the Game Screen during a simulation session in CreditQuest.
+
 ---
 
 ## Getting Started
