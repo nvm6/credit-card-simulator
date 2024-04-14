@@ -11,7 +11,7 @@ The game is developed using React, JavaScript, HTML, and CSS.
 - [Getting Started](#getting-started)
 - [Development Process](#development-process)
 - [Technical Information](#technical-information)
-- [Acknowledgments] (#acknowledgments)
+- [Acknowledgments](#acknowledgments)
 
 ---
 
